@@ -1,4 +1,4 @@
-<?php extend('../templates/main.html', ['title' => 'Home Page']) ?>
+<?php extend('../templates/main.html', ['title' => 'Ross\'s EV Tools - some helpful stuff for your electric vehicle']) ?>
 
 <?php
 // Page content here
@@ -6,10 +6,35 @@
 // includePart('../parts/some-part.html', ['param' => 'value'])
 ?>
 
-<h1 class="mt-8 text-6xl text-center">Hello, World!</h1>
+<h1 class="mt-8 text-6xl text-center">Ross&apos;s EV Tools</h1>
 
-<?php if (ENVIRONMENT === 'DEVELOPMENT') : ?>
-    <h2 class="mt-4 text-2xl text-center">Sssh, we're only testing!</h2>
-<?php endif; ?>
+<h2 class="mt-4 mb-16 text-2xl text-center">Some helpful stuff for your Electric vehicle</h2>
+
+<div class="tool-container">
+    <div id="efficiency-converter" x-data="{ europeanEfficiency: '0', ukEfficiency: '0' }">
+        <h3 class="font-bold text-lg mb-6">European efficiency converter</h3>
+
+        <div class="flex flex-row">
+            <div class="border border-black p-4 mr-4">
+                <div class="mb-2">
+                    <label for="european-efficiency">kWh/100km</label>
+                    <input type="text" name="european-efficiency" x-model="europeanEfficiency">
+                </div>
+                <p>
+                    <span x-text="europeanEfficiency == 0 ? '0.00' : (1 / ((europeanEfficiency / 100) * 1.60934)).toFixed(2)"></span> m/kWh
+                </p>
+            </div>
+
+            <div class="border border-black p-4 mr-4">
+                <div class="mb-2">
+                    <label for="uk-efficiency">m/kWh</label>
+                    <input type="text" name="uk-efficiency" x-model="ukEfficiency">
+                </div>
+                <p>
+                    <span x-text="ukEfficiency == 0 ? '0.00' : (((1 / ukEfficiency) / 1.60934) * 100).toFixed(2)"></span> m/kWh
+                </p>
+            </div>
+    </div>
+</div>
 
 <?php endExtend(); ?>

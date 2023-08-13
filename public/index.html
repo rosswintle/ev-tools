@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Ross's EV Tools - some helpful stuff for your electric vehicle</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" href="/css/styles.css">
@@ -13,7 +13,7 @@
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Home Page">
+    <meta property="og:title" content="Ross's EV Tools - some helpful stuff for your electric vehicle">
     <meta property="og:description" content="">
     <meta property="og:image" content="">
 
@@ -21,25 +21,52 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="">
     <meta property="twitter:url" content="">
-    <meta name="twitter:title" content="Home Page">
+    <meta name="twitter:title" content="Ross's EV Tools - some helpful stuff for your electric vehicle">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="">
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <header class="">
 </header>
 
-<body>
+<body class="w-auto max-w-screen-lg mx-auto">
     
 
-<h1 class="mt-8 text-6xl text-center">Hello, World!</h1>
+<h1 class="mt-8 text-6xl text-center">Ross&apos;s EV Tools</h1>
 
-    <h2 class="mt-4 text-2xl text-center">Sssh, we're only testing!</h2>
+<h2 class="mt-4 mb-16 text-2xl text-center">Some helpful stuff for your Electric vehicle</h2>
+
+<div class="tool-container">
+    <div id="efficiency-converter" x-data="{ europeanEfficiency: '0', ukEfficiency: '0' }">
+        <h3 class="font-bold text-lg mb-6">European efficiency converter</h3>
+
+        <div class="flex flex-row">
+            <div class="border border-black p-4 mr-4">
+                <div class="mb-2">
+                    <label for="european-efficiency">kWh/100km</label>
+                    <input type="text" name="european-efficiency" x-model="europeanEfficiency">
+                </div>
+                <p>
+                    <span x-text="europeanEfficiency == 0 ? '0.00' : (1 / ((europeanEfficiency / 100) * 1.60934)).toFixed(2)"></span> m/kWh
+                </p>
+            </div>
+
+            <div class="border border-black p-4 mr-4">
+                <div class="mb-2">
+                    <label for="uk-efficiency">m/kWh</label>
+                    <input type="text" name="uk-efficiency" x-model="ukEfficiency">
+                </div>
+                <p>
+                    <span x-text="ukEfficiency == 0 ? '0.00' : (((1 / ukEfficiency) / 1.60934) * 100).toFixed(2)"></span> m/kWh
+                </p>
+            </div>
+    </div>
+</div>
 
 
     <footer class="">
 </footer>
-
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>
