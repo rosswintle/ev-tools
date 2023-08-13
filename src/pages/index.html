@@ -10,12 +10,12 @@
 
 <h2 class="mt-4 mb-16 text-2xl text-center">Some helpful stuff for your Electric vehicle</h2>
 
-<div class="tool-container">
+<div class="tool-container w-full">
     <div id="efficiency-converter" x-data="{ europeanEfficiency: '0', ukEfficiency: '0' }">
         <h3 class="font-bold text-lg mb-6">European efficiency converter</h3>
 
-        <div class="flex flex-row">
-            <div class="border border-black p-4 mr-4">
+        <div class="md:flex md:flex-row">
+            <div class="border border-black p-4 mr-4 mb-4">
                 <div class="mb-2">
                     <label for="european-efficiency">kWh/100km</label>
                     <input type="text" name="european-efficiency" x-model="europeanEfficiency">
