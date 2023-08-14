@@ -45,22 +45,18 @@
         <div class="md:flex md:flex-row">
             <div class="border border-black p-4 mr-4 mb-4">
                 <div class="mb-2">
-                    <label for="european-efficiency">kWh/100km</label>
-                    <input type="text" name="european-efficiency" x-model="europeanEfficiency">
+                    <label class="block mb-2" for="european-efficiency">kWh/100km</label>
+                    <input type="text" name="european-efficiency" x-model="europeanEfficiency"
+                    @change="ukEfficiency = ( europeanEfficiency == 0 ? '0.00' : (1 / ((europeanEfficiency / 100) * 1.60934)).toFixed(2) )">
                 </div>
-                <p>
-                    <span x-text="europeanEfficiency == 0 ? '0.00' : (1 / ((europeanEfficiency / 100) * 1.60934)).toFixed(2)"></span> m/kWh
-                </p>
             </div>
 
             <div class="border border-black p-4 mr-4">
                 <div class="mb-2">
-                    <label for="uk-efficiency">m/kWh</label>
-                    <input type="text" name="uk-efficiency" x-model="ukEfficiency">
+                    <label class="block mb-2" for="uk-efficiency">m/kWh</label>
+                    <input type="text" name="uk-efficiency" x-model="ukEfficiency"
+                    @change="europeanEfficiency = ( ukEfficiency == 0 ? '0.00' : (((1 / ukEfficiency) / 1.60934) * 100).toFixed(2) )">
                 </div>
-                <p>
-                    <span x-text="ukEfficiency == 0 ? '0.00' : (((1 / ukEfficiency) / 1.60934) * 100).toFixed(2)"></span> m/kWh
-                </p>
             </div>
     </div>
 </div>
