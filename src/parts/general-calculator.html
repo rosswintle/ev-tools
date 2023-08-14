@@ -1,0 +1,168 @@
+<div id="generalCalculator" x-data="{
+    distancePerKwh: '0',
+    totalRange: '0',
+    rangePerPercent: '0',
+    chargePercent: '0',
+    capacity: '50',
+    distanceUnit: 'm',
+    fixedVal: 'capacity'
+}">
+
+    <p class="mb-4">
+        A general range/efficiency calculator. Pin a value to fix it. One value is always fixed.<br>KM can be used instead of miles - just ignore the units.
+    </p>
+
+    <!--
+    <p class="mb-4">
+        <button
+            :disabled="distanceUnit === 'km'"
+            @click="distanceUnit = 'km'"
+        >
+            KM
+        </button>
+        <button
+            :disabled="distanceUnit === 'm'"
+            @click="distanceUnit = 'm'"
+        >
+            Miles
+        </button>
+
+    </p>
+    -->
+
+    <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div class="border border-black p-4 mb-4">
+            <div class="mb-2">
+                <?php includePart(
+                    'calculator-title.html',
+                    [
+                        'title'    => 'Efficiency (m/kWh)',
+                        'variable' => 'efficiency',
+                    ])
+                ?>
+                <input
+                    class="block w-full"
+                    type="text" name="efficiency" x-model="distancePerKwh"
+                    :class="fixedVal === 'efficiency' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'efficiency'"
+                    @input="updateFromEfficiency"
+                    @focus="selectInputContent"
+                >
+            </div>
+        </div>
+
+        <div class="border border-black p-4 mb-4">
+            <div class="mb-2">
+                <?php includePart(
+                    'calculator-title.html',
+                    [
+                        'title'    => 'Total range (m)',
+                        'variable' => 'total-range',
+                    ])
+                ?>
+                <input
+                    class="block w-full"
+                    type="text" name="total-range" x-model="totalRange"
+                    :class="fixedVal === 'total-range' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'total-range'"
+                    @input="updateFromTotalRange"
+                    @focus="selectInputContent"
+                >
+            </div>
+        </div>
+
+        <div class="border border-black p-4 mb-4">
+            <div>
+                <label class="block mb-2" for="range-per-percent">Range per % charge</label>
+                <p class="block w-full pt-[9px]" x-text="rangePerPercent + ' miles'"></p>
+            </div>
+        </div>
+
+        <!-- <div class="w-full border border-black p-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="current-charge-percent">Current charge %</label>
+                <input
+                    class="block w-full"
+                    type="text" name="current-charge-percent" x-model="chargePercent"
+                    @input="updateFromChargePercent"
+                >
+            </div>
+        </div> -->
+
+        <div class="border border-black p-4 mb-4">
+            <div class="mb-2">
+                <?php includePart(
+                    'calculator-title.html',
+                    [
+                        'title'    => 'Capacity (kWh)',
+                        'variable' => 'capacity',
+                    ])
+                ?>
+                <input
+                    class="block w-full"
+                    type="text" name="capacity" x-model="capacity"
+                    :class="fixedVal === 'capacity' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'capacity'"
+                    @input="updateFromCapacity"
+                    @focus="selectInputContent"
+                >
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function updateFromEfficiency() {
+            // Update range metrics if capacity fixed
+            if (this.fixedVal === 'capacity') {
+                this.totalRange = (this.distancePerKwh * this.capacity).toFixed(2)
+                this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+            }
+            // Update capacity if range is fixed
+            if (this.fixedVal === 'total-range') {
+                this.capacity = (this.totalRange / this.distancePerKwh).toFixed(2)
+            }
+        }
+
+        function updateFromTotalRange() {
+            // Update efficiency if capacity fixed
+            if (this.fixedVal === 'capacity') {
+                this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2)
+            }
+            // Update capacity if efficiency fixed
+            if (this.fixedVal === 'efficiency') {
+                this.capacity = (this.totalRange / this.distancePerKwh).toFixed(2)
+            }
+        }
+
+        /*
+        function updateFromRangePerPercent() {
+            // Update total range and then re-calculate
+            this.totalRange = (this.rangePerPercent * 100).toFixed(2)
+            updateFromTotalRange()
+        }
+        */
+
+        // function updateFromChargePercent() {
+
+        // }
+
+        function updateFromCapacity() {
+            // Update efficiency if total range fixed
+            if (this.fixedVal === 'total-range') {
+                this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2)
+            }
+            // Update total range if efficiency fixed
+            if (this.fixedVal === 'efficiency') {
+                this.totalRange = (this.distancePerKwh * this.capacity).toFixed(2)
+                this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+            }
+        }
+
+        function selectInputContent(e) {
+            console.log('Selecting');
+            e.target.select()
+        }
+</script>
+
+</div>

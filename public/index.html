@@ -47,44 +47,104 @@
     totalRange: '0',
     rangePerPercent: '0',
     chargePercent: '0',
-    capacity: '50'
+    capacity: '50',
+    distanceUnit: 'm',
+    fixedVal: 'capacity'
 }">
 
     <p class="mb-4">
-        A general range/efficiency calculator
+        A general range/efficiency calculator. Pin a value to fix it. One value is always fixed.<br>KM can be used instead of miles - just ignore the units.
     </p>
+
+    <!--
+    <p class="mb-4">
+        <button
+            :disabled="distanceUnit === 'km'"
+            @click="distanceUnit = 'km'"
+        >
+            KM
+        </button>
+        <button
+            :disabled="distanceUnit === 'm'"
+            @click="distanceUnit = 'm'"
+        >
+            Miles
+        </button>
+
+    </p>
+    -->
 
     <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
         <div class="border border-black p-4 mb-4">
             <div class="mb-2">
-                <label class="block mb-2" for="efficiency">Efficiency (m/kwh)</label>
+                <div class="flex justify-between mb-2">
+    <label class="block" for="efficiency">Efficiency (m/kWh)</label>
+    <button @click="fixedVal = 'efficiency'">
+        <span class="sr-only">Fix</span>
+        <svg
+            x-cloak
+            class="pin-angled w-5 h-5"
+            :class="fixedVal === 'efficiency' && 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"></path>
+        </svg>
+        <svg
+            x-cloak
+            class="pin-angled-filled w-5 h-5"
+            :class="fixedVal === 'efficiency' || 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"></path>
+        </svg>
+    </button>
+</div>
                 <input
                     class="block w-full"
                     type="text" name="efficiency" x-model="distancePerKwh"
+                    :class="fixedVal === 'efficiency' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'efficiency'"
                     @input="updateFromEfficiency"
+                    @focus="selectInputContent"
                 >
             </div>
         </div>
 
         <div class="border border-black p-4 mb-4">
             <div class="mb-2">
-                <label class="block mb-2" for="total-range">Total range</label>
+                <div class="flex justify-between mb-2">
+    <label class="block" for="total-range">Total range (m)</label>
+    <button @click="fixedVal = 'total-range'">
+        <span class="sr-only">Fix</span>
+        <svg
+            x-cloak
+            class="pin-angled w-5 h-5"
+            :class="fixedVal === 'total-range' && 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"></path>
+        </svg>
+        <svg
+            x-cloak
+            class="pin-angled-filled w-5 h-5"
+            :class="fixedVal === 'total-range' || 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"></path>
+        </svg>
+    </button>
+</div>
                 <input
                     class="block w-full"
                     type="text" name="total-range" x-model="totalRange"
+                    :class="fixedVal === 'total-range' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'total-range'"
                     @input="updateFromTotalRange"
+                    @focus="selectInputContent"
                 >
             </div>
         </div>
 
         <div class="border border-black p-4 mb-4">
-            <div class="mb-2">
+            <div>
                 <label class="block mb-2" for="range-per-percent">Range per % charge</label>
-                <input
-                    class="block w-full"
-                    type="text" name="range-per-percent" x-model="rangePerPercent"
-                    @input="updateFromRangePerPercent"
-                >
+                <p class="block w-full pt-[9px]" x-text="rangePerPercent + ' miles'"></p>
             </div>
         </div>
 
@@ -101,11 +161,33 @@
 
         <div class="border border-black p-4 mb-4">
             <div class="mb-2">
-                <label class="block mb-2" for="capacity">Capacity (kWh)</label>
+                <div class="flex justify-between mb-2">
+    <label class="block" for="capacity">Capacity (kWh)</label>
+    <button @click="fixedVal = 'capacity'">
+        <span class="sr-only">Fix</span>
+        <svg
+            x-cloak
+            class="pin-angled w-5 h-5"
+            :class="fixedVal === 'capacity' && 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146zm.122 2.112v-.002.002zm0-.002v.002a.5.5 0 0 1-.122.51L6.293 6.878a.5.5 0 0 1-.511.12H5.78l-.014-.004a4.507 4.507 0 0 0-.288-.076 4.922 4.922 0 0 0-.765-.116c-.422-.028-.836.008-1.175.15l5.51 5.509c.141-.34.177-.753.149-1.175a4.924 4.924 0 0 0-.192-1.054l-.004-.013v-.001a.5.5 0 0 1 .12-.512l3.536-3.535a.5.5 0 0 1 .532-.115l.096.022c.087.017.208.034.344.034.114 0 .23-.011.343-.04L9.927 2.028c-.029.113-.04.23-.04.343a1.779 1.779 0 0 0 .062.46z"></path>
+        </svg>
+        <svg
+            x-cloak
+            class="pin-angled-filled w-5 h-5"
+            :class="fixedVal === 'capacity' || 'hidden'"
+            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"></path>
+        </svg>
+    </button>
+</div>
                 <input
                     class="block w-full"
                     type="text" name="capacity" x-model="capacity"
+                    :class="fixedVal === 'capacity' && 'text-gray-500 bg-gray-100'"
+                    :disabled="fixedVal === 'capacity'"
                     @input="updateFromCapacity"
+                    @focus="selectInputContent"
                 >
             </div>
         </div>
@@ -114,41 +196,55 @@
 
     <script>
         function updateFromEfficiency() {
-            // Update range metrics if capacity exists
-            if (this.capacity > 0) {
+            // Update range metrics if capacity fixed
+            if (this.fixedVal === 'capacity') {
                 this.totalRange = (this.distancePerKwh * this.capacity).toFixed(2)
                 this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+            }
+            // Update capacity if range is fixed
+            if (this.fixedVal === 'total-range') {
+                this.capacity = (this.totalRange / this.distancePerKwh).toFixed(2)
             }
         }
 
         function updateFromTotalRange() {
-            // Update efficiency capacity exists
-            if (this.capacity > 0) {
+            // Update efficiency if capacity fixed
+            if (this.fixedVal === 'capacity') {
                 this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2)
             }
-            // Update range per %
-            this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+            // Update capacity if efficiency fixed
+            if (this.fixedVal === 'efficiency') {
+                this.capacity = (this.totalRange / this.distancePerKwh).toFixed(2)
+            }
         }
 
+        /*
         function updateFromRangePerPercent() {
             // Update total range and then re-calculate
             this.totalRange = (this.rangePerPercent * 100).toFixed(2)
             updateFromTotalRange()
         }
+        */
 
         // function updateFromChargePercent() {
 
         // }
 
         function updateFromCapacity() {
-            // Update efficiency if total range exists
-            if (this.totalRange > 0) {
+            // Update efficiency if total range fixed
+            if (this.fixedVal === 'total-range') {
                 this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2)
             }
-            // Update total range if efficiency exists
-            if (this.distancePerKwh > 0) {
+            // Update total range if efficiency fixed
+            if (this.fixedVal === 'efficiency') {
                 this.totalRange = (this.distancePerKwh * this.capacity).toFixed(2)
+                this.rangePerPercent = (this.totalRange / 100).toFixed(2)
             }
+        }
+
+        function selectInputContent(e) {
+            console.log('Selecting');
+            e.target.select()
         }
 </script>
 
