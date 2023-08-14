@@ -11,6 +11,12 @@
     <h2 class="mt-4 mb-16 text-2xl text-center">Some helpful stuff for your Electric vehicle</h2>
 
     <?php extend('../parts/tool-container.html') ?>
+        <?php includePart('../parts/tool-title.html', ['title' => 'General range/efficiency calculator']) ?>
+
+        <?php includePart('../parts/general-calculator.html') ?>
+    <?php endExtend(); ?>
+
+    <?php extend('../parts/tool-container.html') ?>
         <?php includePart('../parts/tool-title.html', ['title' => 'European efficiency converter']) ?>
 
         <?php includePart('../parts/eu-efficiency-tool.html') ?>

@@ -40,6 +40,119 @@
 
     <div class="tool-container w-full">
             <h3 class="font-bold text-lg mb-6">
+    General range/efficiency calculator</h3>
+
+        <div id="generalCalculator" x-data="{
+    distancePerKwh: '0',
+    totalRange: '0',
+    rangePerPercent: '0',
+    chargePercent: '0',
+    capacity: '50'
+}">
+
+    <p class="mb-4">
+        A general range/efficiency calculator
+    </p>
+
+    <div class="w-full min-[400px]:flex min-[400px]:flex-row">
+        <div class="w-full border border-black p-4 mr-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="efficiency">Efficiency (m/kwh)</label>
+                <input
+                    class="block w-full"
+                    type="text" name="efficiency" x-model="distancePerKwh"
+                    @input="updateFromEfficiency"
+                >
+            </div>
+        </div>
+
+        <div class="w-full border border-black p-4 mr-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="total-range">Total range</label>
+                <input
+                    class="block w-full"
+                    type="text" name="total-range" x-model="totalRange"
+                    @input="updateFromTotalRange"
+                >
+            </div>
+        </div>
+
+        <div class="w-full border border-black p-4 mr-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="range-per-percent">Range per % charge</label>
+                <input
+                    class="block w-full"
+                    type="text" name="range-per-percent" x-model="rangePerPercent"
+                    @input="updateFromRangePerPercent"
+                >
+            </div>
+        </div>
+
+        <!-- <div class="w-full border border-black p-4 mr-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="current-charge-percent">Current charge %</label>
+                <input
+                    class="block w-full"
+                    type="text" name="current-charge-percent" x-model="chargePercent"
+                    @input="updateFromChargePercent"
+                >
+            </div>
+        </div> -->
+
+        <div class="w-full border border-black p-4 mr-4 mb-4">
+            <div class="mb-2">
+                <label class="block mb-2" for="capacity">Capacity (kWh)</label>
+                <input
+                    class="block w-full"
+                    type="text" name="capacity" x-model="capacity"
+                    @input="updateFromCapacity"
+                >
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function updateFromEfficiency() {
+            // Update range metrics if capacity exists
+            if (this.capacity > 0) {
+                this.totalRange = this.distancePerKwh * this.capacity
+                this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+            }
+        }
+
+        function updateFromTotalRange() {
+            // Update efficiency capacity exists
+            if (this.capacity > 0) {
+                this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2)
+            }
+            // Update range per %
+            this.rangePerPercent = (this.totalRange / 100).toFixed(2)
+        }
+
+        function updateFromRangePerPercent() {
+            // Update total range and then re-calculate
+            this.totalRange = this.rangePerPercent * 100
+            updateFromTotalRange()
+        }
+
+        // function updateFromChargePercent() {
+
+        // }
+
+        function updateFromCapacity() {
+            // Update efficiency if total range exists
+            if (this.totalRange > 0) {
+                this.distancePerKwh = (this.totalRange / this.capacity).toFixed(2);
+            }
+        }
+</script>
+
+</div>
+    </div>
+
+    <div class="tool-container w-full">
+            <h3 class="font-bold text-lg mb-6">
     European efficiency converter</h3>
 
         <div id="efficiency-converter" x-data="{ europeanEfficiency: '0', ukEfficiency: '0' }">
