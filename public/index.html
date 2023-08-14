@@ -54,18 +54,18 @@
             <div class="mb-2">
                 <label class="block mb-2" for="european-efficiency">kWh/100km</label>
                 <input
-                    class="w-full"
+                    class="block w-full"
                     type="text" name="european-efficiency" x-model="europeanEfficiency"
                     @input="ukEfficiency = ( europeanEfficiency == 0 ? '0.00' : (1 / ((europeanEfficiency / 100) * 1.60934)).toFixed(2) )"
                 >
             </div>
         </div>
 
-        <div class="w-full border border-black p-4 mr-4">
+        <div class="w-full border border-black p-4 mr-4 mb-4">
             <div class="mb-2">
                 <label class="block mb-2" for="uk-efficiency">m/kWh</label>
                 <input
-                    class="w-full"
+                    class="block w-full"
                     type="text" name="uk-efficiency" x-model="ukEfficiency"
                     @input="europeanEfficiency = ( ukEfficiency == 0 ? '0.00' : (((1 / ukEfficiency) / 1.60934) * 100).toFixed(2) )"
                 >
