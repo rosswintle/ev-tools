@@ -736,12 +736,24 @@ select {
   display: block;
 }
 
+.grid {
+  display: grid;
+}
+
 .w-full {
   width: 100%;
 }
 
 .max-w-screen-lg {
   max-width: 1024px;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .border {
@@ -800,5 +812,11 @@ select {
 
   .min-\[400px\]\:flex-row {
     flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
