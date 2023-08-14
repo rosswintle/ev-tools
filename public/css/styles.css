@@ -724,6 +724,10 @@ select {
   margin-right: 1rem;
 }
 
+.mt-16 {
+  margin-top: 4rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -801,8 +805,16 @@ select {
   font-weight: 700;
 }
 
+.underline {
+  text-decoration-line: underline;
+}
+
 [x-cloak] {
   display: none !important;
+}
+
+.hover\:no-underline:hover {
+  text-decoration-line: none;
 }
 
 @media (min-width: 400px) {
